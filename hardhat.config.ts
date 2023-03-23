@@ -99,14 +99,6 @@ module.exports = {
       chainId: 42161,
       // gasPrice: gasPrice
     },
-    matic: {
-      // url: `https://polygon-mainnet.infura.io/v3/${INFURA_POLYGON_ID}`,
-      url: `https://polygon-mainnet.g.alchemy.com/v2/V8FIYAh3-ZiD4GS_29v6byUsVDadOCus`,
-      accounts: [OWNER_PRIVATE_KEY],
-      chainId: 137,
-      gasPrice: gasPrice,
-      timeout: 1000000,
-    },
     goerli: {
       // url: `https://eth-goerli.alchemyapi.io/v2/V8FIYAh3-ZiD4GS_29v6byUsVDadOCus`,
       url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
@@ -123,6 +115,24 @@ module.exports = {
       chainId: 11155111,
       gasPrice: gasPrice,
       timeout: 1000000,
+    },
+    mumbai: {
+      url: `https://rpc-mumbai.maticvigil.com/`,
+      chainId: 80001,
+      accounts: [OWNER_PRIVATE_KEY],
+      gas: 3000000,
+      // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      // timeoutBlocks: 2000,  // # of blocks before a deployment times out  (minimum/default: 50)
+      // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
+    polygon: {
+      url: `https://polygon-rpc.com`,
+      chainId: 137,
+      accounts: [OWNER_PRIVATE_KEY],
+      gas: 3000000,
+      // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      // timeoutBlocks: 2000,  // # of blocks before a deployment times out  (minimum/default: 50)
+      // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     },
   },
   etherscan: {
