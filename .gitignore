@@ -1,0 +1,12 @@
+node_modules/
+coverage/
+cache/
+artifacts/
+.openzeppelin/
+typechain/
+artifacts
+
+.env
+yarn.lock
+package-lock.json
+.idea/
