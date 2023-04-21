@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract nft is ERC721Enumerable, Ownable, Pausable {
+contract nft1 is ERC721Enumerable, Ownable, Pausable {
 
     using Strings for uint256;
     using Counters for Counters.Counter;
@@ -25,6 +25,8 @@ contract nft is ERC721Enumerable, Ownable, Pausable {
     address constant public royaltiesPayoutAddress = 0xdc7257720EF672AdCCda40c078892EE62dcc6394;
     uint256 public royaltiesPercent = 1000; // out of 10000 = 10%
     uint256 public mintPrice = 0.5 ether;
+
+    address public burner;
 
     event Received(address, uint);
 
@@ -130,5 +132,15 @@ contract nft is ERC721Enumerable, Ownable, Pausable {
             bool success;
             (success,) = royaltiesPayoutAddress.call{value: (address(this).balance), gas: 30000}("");
         }
+    }
+
+    function setBurner(address _burner) public onlyOwner {
+        require(_burner != address(0));
+        burner = _burner;
+    }
+
+    function burn(uint256 _tokenId) external {
+        require(msg.sender == burner, "Not allowed to burn");
+        _burn(_tokenId);
     }
 }

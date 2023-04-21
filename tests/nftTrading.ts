@@ -28,7 +28,7 @@ async function deployContracts(displayLog = false) {
     console.log("          - Deployer:        ", owner.address);
   }
 
-  const _ERC721Artifacts = await ethers.getContractFactory("nft");
+  const _ERC721Artifacts = await ethers.getContractFactory("nft1");
   _nftContract = await _ERC721Artifacts.deploy();
   await _nftContract.deployed();
 
