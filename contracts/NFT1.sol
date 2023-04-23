@@ -15,7 +15,7 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
 
     Counters.Counter private supply;
     mapping (address => uint) nftCounts;
-    string public uriPrefix = "https://crazyzoo.mypinata.cloud/ipfs/QmcTyHXrXw9ZkZCo7SmjsRtyn3mSd36VkUjoBFrZKds9gw/";
+    string public uriPrefix = "https://gateway.pinata.cloud/ipfs/QmNzRkSXuL82w8VVaNvE1C3sBc8HRJW4aSwujsu6CHkHBz/";
     string public uriSuffix = ".json";
 
     uint256 constant fee = 0.01 ether;
@@ -34,7 +34,7 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
         emit Received(msg.sender, msg.value);
     }
 
-    constructor() ERC721("InFilm", "InFilm") {
+    constructor() ERC721("GratitudeNFT", "GratitudeNFT") {
         for (uint256 i = 0; i < 45; i++) {
             supply.increment();
             _safeMint(owner(), supply.current());
