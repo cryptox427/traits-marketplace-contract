@@ -19,12 +19,12 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
     string public uriSuffix = ".json";
 
     uint256 constant fee = 0.01 ether;
-    uint256 constant maxSupply = 45;
+    uint256 constant maxSupply = 1111;
 
     uint256 constant mintAmount = 1;
-    address constant public royaltiesPayoutAddress = 0xdc7257720EF672AdCCda40c078892EE62dcc6394;
+    address constant public royaltiesPayoutAddress = 0x16A4911DE706879bc809a5D2Cc28BE599ccc37F1;
     uint256 public royaltiesPercent = 1000; // out of 10000 = 10%
-    uint256 public mintPrice = 0.5 ether;
+    uint256 public mintPrice = 0.6 ether;
 
     address public burner;
 
@@ -35,10 +35,7 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
     }
 
     constructor() ERC721("GratitudeNFT", "GratitudeNFT") {
-        for (uint256 i = 0; i < 45; i++) {
-            supply.increment();
-            _safeMint(owner(), supply.current());
-        }
+       
     }
 
     modifier onlyOrigin () {
@@ -54,10 +51,7 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
         _unpause();
     }
 
-    function mint(uint256 tokenId) public {
-        supply.increment();
-        _mint(msg.sender, tokenId);
-    }
+   
 
     function ownerMint(uint256 _mintAmount, address _receiver) external onlyOwner {
 
