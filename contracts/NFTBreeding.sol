@@ -54,7 +54,7 @@ contract NFTBreeding {
         return newTokenId;
     }
 
-    function burnAmount() public returns (uint256) {
+    function burnAmount() public view returns (uint256) {
         return burnCounter.current();
     }
 }
