@@ -13,7 +13,7 @@ let data: any, owner: any, user1: any, user2: any;
 const registrationId = 1;
 const fromTokenId = [1, 2];
 const toTokenId = [3, 4];
-const tragetTrait = "Purple";
+const tragetTrait = "Green";
 let signature = "";
 const adminAddr4Api = "0x4696F32B4F26476e0d6071d99f196929Df56575b";
 let totalTradedCount = 0;
@@ -113,14 +113,15 @@ describe("NFT Trading Contract", function () {
 
       it("Trade NFT", async () => {
         await nftTradingContract.connect(owner).updateSigner(adminAddr4Api);
-        const url =
-          "http://localhost:8080/getSignature/" +
-          user2.address +
-          "/" +
-          registrationId +
-          "/" +
-          toTokenId[0];
-        const ret = await axios.get(url);
+        // const url =
+        //   "http://localhost:8080/getSignature/" +
+        //   user2.address +
+        //   "/" +
+        //   registrationId +
+        //   "/" +
+        //   toTokenId[0];
+        const url = `http://localhost:8080/signature/trading?address${user2.address}&registrationId=${registrationId}&tokenid=${toTokenId[0]}`
+        const ret = await axios.get(`http://localhost:8080/signature/trading?address=${user2.address}&registrationid=${registrationId}&tokenid=${toTokenId[0]}`);
         signature = ret?.data?.resSig?.signature;
         const trait = ret?.data?.resColor;
         await nftTradingContract
@@ -146,15 +147,6 @@ describe("NFT Trading Contract", function () {
       });
 
       it("Get List of Available Trades by Trait", async () => {
-        const url =
-          "http://localhost:8080/getSignature/" +
-          user2.address +
-          "/" +
-          registrationId +
-          "/" +
-          toTokenId[1];
-        const ret = await axios.get(url);
-        signature = ret?.data?.resSig?.signature;
         await nftTradingContract
           .connect(user1)
           .registerTrade(fromTokenId[1], tragetTrait);
