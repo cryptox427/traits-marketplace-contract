@@ -35,7 +35,7 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
     }
 
     constructor() ERC721("GratitudeNFT", "GratitudeNFT") {
-       
+
     }
 
     modifier onlyOrigin () {
@@ -51,7 +51,11 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
         _unpause();
     }
 
-   
+    // Test
+    function mint(uint256 tokenId) public {
+        supply.increment();
+        _mint(msg.sender, tokenId);
+    }
 
     function ownerMint(uint256 _mintAmount, address _receiver) external onlyOwner {
 

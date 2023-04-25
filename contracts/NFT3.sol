@@ -8,14 +8,14 @@ import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract nft2 is ERC721Enumerable, Ownable, Pausable {
+contract nft3 is ERC721Enumerable, Ownable, Pausable {
 
     using Strings for uint256;
     using Counters for Counters.Counter;
 
     Counters.Counter private supply;
     mapping (address => uint) nftCounts;
-    string public uriPrefix = "https://gateway.pinata.cloud/ipfs/QmNqvTFSTzmzKPFjunNWGeEetxHX3kqpUgEie2dqBdfT4V/";
+    string public uriPrefix = "https://gateway.pinata.cloud/ipfs/QmVkYfFn9HfnmYJxLacQVFsUbi3Ro5dW74NrDzZ2zUuECp/";
     string public uriSuffix = ".json";
 
     uint256 constant fee = 0.01 ether;
@@ -32,7 +32,7 @@ contract nft2 is ERC721Enumerable, Ownable, Pausable {
         emit Received(msg.sender, msg.value);
     }
 
-    constructor() ERC721("GratitudeNFTV2", "GratitudeNFTV2") {
+    constructor() ERC721("GratitudeNFTV3", "GratitudeNFTV3") {
         for (uint256 i = 0; i < 45; i++) {
             supply.increment();
             _safeMint(owner(), supply.current());

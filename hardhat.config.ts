@@ -129,7 +129,7 @@ module.exports = {
       url: `https://polygon-rpc.com`,
       chainId: 137,
       accounts: [OWNER_PRIVATE_KEY],
-      gas: 3000000,
+      gas: 10000000,
       // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
       // timeoutBlocks: 2000,  // # of blocks before a deployment times out  (minimum/default: 50)
       // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
@@ -140,7 +140,7 @@ module.exports = {
     // Obtain one at https://etherscan.io/
     // url: "https://api-rinkeby.etherscan.io/",
     // url: "https://api.etherscan.io/",
-    apiKey: ETHERSCAN_API_KEY,
+    apiKey: POLYGON_API_KEY,
     // url: "https://api.arbiscan.io/",
     // apiKey: ARBISCAN_API_KEY
     // url: "https://api.polygonscan.com/",

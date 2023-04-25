@@ -111,79 +111,79 @@ describe("NFT Trading Contract", function () {
         );
       });
 
-      // it("Trade NFT", async () => {
-      //   await nftTradingContract.connect(owner).updateSigner(adminAddr4Api);
-      //   const url =
-      //     "http://localhost:8080/getSignature/" +
-      //     user2.address +
-      //     "/" +
-      //     registrationId +
-      //     "/" +
-      //     toTokenId[0];
-      //   const ret = await axios.get(url);
-      //   signature = ret?.data?.resSig?.signature;
-      //   const trait = ret?.data?.resColor;
-      //   await nftTradingContract
-      //     .connect(user1)
-      //     .registerTrade(fromTokenId[0], tragetTrait);
-      //   totalRegistrationCount++;
-      //   await nftTradingContract
-      //     .connect(user2)
-      //     .buy(registrationId, toTokenId[0], trait, signature);
-      //   expect(await nftContract.ownerOf(fromTokenId[0])).to.be.equal(
-      //     user2.address
-      //   );
-      //   expect(await nftContract.ownerOf(toTokenId[0])).to.be.equal(
-      //     user1.address
-      //   );
-      //   totalTradedCount++;
-      // });
-      //
-      // it("Get Traded Count", async () => {
-      //   expect(await nftTradingContract.getTradedAmount()).to.be.equal(
-      //     totalTradedCount
-      //   );
-      // });
-      //
-      // it("Get List of Available Trades by Trait", async () => {
-      //   const url =
-      //     "http://localhost:8080/getSignature/" +
-      //     user2.address +
-      //     "/" +
-      //     registrationId +
-      //     "/" +
-      //     toTokenId[1];
-      //   const ret = await axios.get(url);
-      //   signature = ret?.data?.resSig?.signature;
-      //   await nftTradingContract
-      //     .connect(user1)
-      //     .registerTrade(fromTokenId[1], tragetTrait);
-      //   totalRegistrationCount++;
-      //   const listAvailable = await nftTradingContract.getListBySeller(
-      //     user1.address
-      //   );
-      //   expect(await nftContract.ownerOf(fromTokenId[1])).to.be.equal(nftTradingContract.address)
-      //   expect(listAvailable[1].from).to.be.equal(user1.address);
-      // });
-      //
-      // it('should withdraw the registration', async () => {
-      //   const listAvailable = await nftTradingContract.getListBySeller(
-      //       user1.address
-      //   );
-      //   const registration_id = parseInt(listAvailable[listAvailable.length - 1].registrationId.toString())
-      //   await nftTradingContract
-      //       .connect(user1)
-      //       .withdraw(registration_id);
-      //   const registration = await nftTradingContract.getRegistration(registration_id);
-      //   expect(registration.withdrawn).to.be.equal(true);
-      //   expect(await nftContract.ownerOf(registration.tokenId)).to.be.equal(user1.address)
-      //   expect(await nftTradingContract.getRegistrationCount()).to.be.equal(totalRegistrationCount)
-      // });
-      //
-      // it('should get all registrations',  async function () {
-      //   const list = await nftTradingContract.getRegistrationList();
-      //   expect(list.length).to.be.equal(totalRegistrationCount)
-      // });
+      it("Trade NFT", async () => {
+        await nftTradingContract.connect(owner).updateSigner(adminAddr4Api);
+        const url =
+          "http://localhost:8080/getSignature/" +
+          user2.address +
+          "/" +
+          registrationId +
+          "/" +
+          toTokenId[0];
+        const ret = await axios.get(url);
+        signature = ret?.data?.resSig?.signature;
+        const trait = ret?.data?.resColor;
+        await nftTradingContract
+          .connect(user1)
+          .registerTrade(fromTokenId[0], tragetTrait);
+        totalRegistrationCount++;
+        await nftTradingContract
+          .connect(user2)
+          .buy(registrationId, toTokenId[0], trait, signature);
+        expect(await nftContract.ownerOf(fromTokenId[0])).to.be.equal(
+          user2.address
+        );
+        expect(await nftContract.ownerOf(toTokenId[0])).to.be.equal(
+          user1.address
+        );
+        totalTradedCount++;
+      });
+
+      it("Get Traded Count", async () => {
+        expect(await nftTradingContract.getTradedAmount()).to.be.equal(
+          totalTradedCount
+        );
+      });
+
+      it("Get List of Available Trades by Trait", async () => {
+        const url =
+          "http://localhost:8080/getSignature/" +
+          user2.address +
+          "/" +
+          registrationId +
+          "/" +
+          toTokenId[1];
+        const ret = await axios.get(url);
+        signature = ret?.data?.resSig?.signature;
+        await nftTradingContract
+          .connect(user1)
+          .registerTrade(fromTokenId[1], tragetTrait);
+        totalRegistrationCount++;
+        const listAvailable = await nftTradingContract.getListBySeller(
+          user1.address
+        );
+        expect(await nftContract.ownerOf(fromTokenId[1])).to.be.equal(nftTradingContract.address)
+        expect(listAvailable[1].from).to.be.equal(user1.address);
+      });
+
+      it('should withdraw the registration', async () => {
+        const listAvailable = await nftTradingContract.getListBySeller(
+            user1.address
+        );
+        const registration_id = parseInt(listAvailable[listAvailable.length - 1].registrationId.toString())
+        await nftTradingContract
+            .connect(user1)
+            .withdraw(registration_id);
+        const registration = await nftTradingContract.getRegistration(registration_id);
+        expect(registration.withdrawn).to.be.equal(true);
+        expect(await nftContract.ownerOf(registration.tokenId)).to.be.equal(user1.address)
+        expect(await nftTradingContract.getRegistrationCount()).to.be.equal(totalRegistrationCount)
+      });
+
+      it('should get all registrations',  async function () {
+        const list = await nftTradingContract.getRegistrationList();
+        expect(list.length).to.be.equal(totalRegistrationCount)
+      });
     });
   });
 });
