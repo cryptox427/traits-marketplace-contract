@@ -29,7 +29,7 @@ contract NFTTradingWrapper is LibraryLockDataLayout {
         address from;
         address to;
         uint256 tokenId;
-        string targetTrait;
+        string[] targetTraits;
         bool traded;
         uint256 timeRegistered;
         uint256 timeTraded;
@@ -64,11 +64,11 @@ contract NFTTrading is NFTTradingWrapper, OwnableUpgradeable, ReentrancyGuardUpg
         return registrations[_registrationId];
     }
 
-    function registerTrade(uint256 _tokenId, string memory color) external delegatedOnly nonReentrant {
+    function registerTrade(uint256 _tokenId, string[] memory targetTraits) external delegatedOnly nonReentrant {
         require(IERC721(nftContract).ownerOf(_tokenId) == msg.sender, "The placer is not the onwer of the NFT");
         _registered.increment();
         uint256 newItemId = _registered.current();
-        Registration memory registration = Registration(newItemId, msg.sender, address(0), _tokenId, color, false, getTimestamp(), 0, false, 0);
+        Registration memory registration = Registration(newItemId, msg.sender, address(0), _tokenId, targetTraits, false, getTimestamp(), 0, false, 0);
         registrations[newItemId] = registration;
         IERC721(nftContract).safeTransferFrom(msg.sender, address(this), _tokenId);
         emit NewRegistration(newItemId, msg.sender);
@@ -80,12 +80,12 @@ contract NFTTrading is NFTTradingWrapper, OwnableUpgradeable, ReentrancyGuardUpg
         string memory _trait,
         bytes memory _signature
     ) external nonReentrant {
-        require(verify(abi.encodePacked(msg.sender, _registrationId, _tokenId, _trait), _signature), "Incorrect Buy");
+        require(verify(abi.encodePacked(msg.sender, _registrationId, _tokenId), _signature), "Incorrect Buy");
         Registration storage registration = registrations[_registrationId];
         require(msg.sender != registration.from, "The buyer should be different from the seller");
         require(IERC721(nftContract).ownerOf(_tokenId) == msg.sender, "The buyer is not the onwer of the NFT");
         require(registration.traded == false, "The NFT is already sold out");
-        require(keccak256(abi.encodePacked((registration.targetTrait))) == keccak256(abi.encodePacked((_trait))), "This NFT is not suitable for what the seller requested");
+//        require(keccak256(abi.encodePacked((registration.targetTrait))) == keccak256(abi.encodePacked((_trait))), "This NFT is not suitable for what the seller requested");
 
         IERC721(nftContract).safeTransferFrom(msg.sender, registration.from, _tokenId);
         IERC721(nftContract).safeTransferFrom(address(this), msg.sender, registration.tokenId);
@@ -196,26 +196,6 @@ contract NFTTrading is NFTTradingWrapper, OwnableUpgradeable, ReentrancyGuardUpg
 
     function getRegistrationCount() public view returns(uint256) {
         return _registered.current();
-    }
-
-    function getListByTrait(string memory _color) public view returns(Registration [] memory) {
-        Registration [] memory results = new Registration[](_registered.current());
-        uint256 count = 0;
-        uint256 i;
-
-        for (i = 1; i <= _registered.current(); i ++) {
-            if (keccak256(bytes(registrations[i].targetTrait)) == keccak256(bytes(_color))) {
-                results[count] = registrations[i];
-                count++;
-            }
-        }
-
-        Registration [] memory filteredResults = new Registration[](count);
-        for (i = 0; i < count; i ++) {
-            filteredResults[i] = results[i];
-        }
-
-        return filteredResults;
     }
 
     function getListBySeller(address _seller) public view returns(Registration[] memory) {

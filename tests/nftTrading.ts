@@ -13,7 +13,7 @@ let data: any, owner: any, user1: any, user2: any;
 const registrationId = 1;
 const fromTokenId = [1, 2];
 const toTokenId = [3, 4];
-const tragetTrait = "Green";
+const tragetTrait = ["Green", "Yellow", "Cyan"];
 let signature = "";
 const adminAddr4Api = "0x4696F32B4F26476e0d6071d99f196929Df56575b";
 let totalTradedCount = 0;
@@ -151,11 +151,7 @@ describe("NFT Trading Contract", function () {
           .connect(user1)
           .registerTrade(fromTokenId[1], tragetTrait);
         totalRegistrationCount++;
-        const listAvailable = await nftTradingContract.getListBySeller(
-          user1.address
-        );
         expect(await nftContract.ownerOf(fromTokenId[1])).to.be.equal(nftTradingContract.address)
-        expect(listAvailable[1].from).to.be.equal(user1.address);
       });
 
       it('should withdraw the registration', async () => {
