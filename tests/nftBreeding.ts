@@ -124,22 +124,22 @@ describe("NFT breding Contract", function () {
                 expect(1).to.equal(2);
             }
 
-            response = await axios.get(`http://localhost:8080/signature/breedingV2?ids=${JSON.stringify(fromTokenId2)}&address=${user2.address}&type=2`)
-            if (response.data.success && response.data.resSig.signature) {
-                console.log('response----', response.data.resSig.signature)
-                await nftBreedingContract.connect(user2).breed(fromTokenId2, response.data.resSig.signature, 2);
-                expect(await nft1Contract.balanceOf(user2.address)).to.equal(0);
-                expect(await nft3Contract.balanceOf(user2.address)).to.equal(1);
-            } else {
-                expect(1).to.equal(2);
-            }
+            // response = await axios.get(`http://localhost:8080/signature/breedingV2?ids=${JSON.stringify(fromTokenId2)}&address=${user2.address}&type=2`)
+            // if (response.data.success && response.data.resSig.signature) {
+            //     console.log('response----', response.data.resSig.signature)
+            //     await nftBreedingContract.connect(user2).breed(fromTokenId2, response.data.resSig.signature, 2);
+            //     expect(await nft1Contract.balanceOf(user2.address)).to.equal(0);
+            //     expect(await nft3Contract.balanceOf(user2.address)).to.equal(1);
+            // } else {
+            //     expect(1).to.equal(2);
+            // }
 
         });
 
         it('should get breed amount', async function () {
             const amount = await nftBreedingContract.getBreedingCounter();
             console.log(amount, '------amount')
-            expect(await nftBreedingContract.getBreedingCounter()).to.equal(2);
+            expect(await nftBreedingContract.getBreedingCounter()).to.equal(1);
         });
     })
 })

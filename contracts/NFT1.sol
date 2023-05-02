@@ -51,12 +51,6 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
         _unpause();
     }
 
-    // Test
-    function mint(uint256 tokenId) public {
-        supply.increment();
-        _mint(msg.sender, tokenId);
-    }
-
     function ownerMint(uint256 _mintAmount, address _receiver) external onlyOwner {
 
         require(supply.current() + _mintAmount <= maxSupply, "Max supply exceeded!");
@@ -70,7 +64,7 @@ contract nft1 is ERC721Enumerable, Ownable, Pausable {
     function tokenURI(uint256 _tokenId) public view virtual override returns (string memory) {
         require(_exists(_tokenId), "Non-existent token given!");
 
-        uint id = _tokenId % 10;
+        uint id = _tokenId;
         string memory currentBaseURI = _baseURI();
         return bytes(currentBaseURI).length > 0
         ? string(abi.encodePacked(currentBaseURI, id.toString(), uriSuffix))

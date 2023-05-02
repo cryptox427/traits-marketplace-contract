@@ -156,4 +156,10 @@ contract NFTBreeding is ReentrancyGuard, Ownable, Pausable {
     function getBreedingSigner() external view returns (address) {
         return signer;
     }
+
+    function updateNFTContracts(address _nft1, address _nft2, address _nft3) external onlyOwner {
+        nft1 = INFT1(_nft1);
+        nft2 = INFT2(_nft2);
+        nft3 = INFT2(_nft3);
+    }
 }
